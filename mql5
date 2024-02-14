@@ -1,0 +1,126 @@
+
+//+------------------------------------------------------------------+
+//|                                              Papa.mq5            |
+//|                                  Developed by Forex Robot Easy Team|
+//|                                              forexroboteasy.com   |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                      PAPA EA 4.5 Code Development                 |
+//|                                                                  |
+//+------------------------------------------------------------------+
+#property copyright 'Forex Robot Easy Team'
+#property link      'forexroboteasy.com'
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   // Check basic balance requirement
+   double balance = AccountBalance();
+   if (balance < 55)
+   {
+      Print('Insufficient balance. Minimum requirement is 55 or more.');
+      return INIT_FAILED;
+   }
+   
+   // Set optimized parameters for EURUSD 15-minute chart
+   SymbolSetDouble(Symbol(), SYMBOL_TRADE_STOPS_LEVEL, 0.0010);
+   SymbolSetDouble(Symbol(), SYMBOL_TRADE_TICK_VALUE, 0.10);
+   
+   // Set trade comment
+   string comment = 'PAPA EA 4.5 Trade';
+   
+   // Perform market analysis to generate trade ideas
+   double tradeIdea = AnalyzeMarket();
+   
+   // Execute trade based on trade idea
+   if (tradeIdea > 0)
+   {
+      // Buy order
+      double lotSize = CalculateLotSize();
+      bool result = Buy(lotSize, comment);
+      if (result)
+      {
+         Print('Buy order executed successfully.');
+      }
+      else
+      {
+         Print('Buy order execution failed.');
+         return INIT_FAILED;
+      }
+   }
+   else if (tradeIdea < 0)
+   {
+      // Sell order
+      double lotSize = CalculateLotSize();
+      bool result = Sell(lotSize, comment);
+      if (result)
+      {
+         Print('Sell order executed successfully.');
+      }
+      else
+      {
+         Print('Sell order execution failed.');
+         return INIT_FAILED;
+      }
+   }
+   else
+   {
+      Print('No trade idea generated.');
+      return INIT_FAILED;
+   }
+   
+   // Initialization successful
+   return INIT_SUCCEEDED;
+}
+
+//+------------------------------------------------------------------+
+//| Function to analyze the forex market and generate trade ideas     |
+//+------------------------------------------------------------------+
+double AnalyzeMarket()
+{
+   // Analyze the market and generate a trade idea
+   double tradeIdea = 0.0; // Placeholder value
+   
+   // Perform market analysis here
+   // ...
+   
+   return tradeIdea;
+}
+
+//+------------------------------------------------------------------+
+//| Function to calculate the lot size for the trade                  |
+//+------------------------------------------------------------------+
+double CalculateLotSize()
+{
+   // Calculate the lot size based on risk management strategy
+   double lotSize = 0.01; // Placeholder value
+   
+   // Perform lot size calculation here
+   // ...
+   
+   return lotSize;
+}
+
+//+------------------------------------------------------------------+
+//| Function to execute a buy order                                   |
+//+------------------------------------------------------------------+
+bool Buy(double lotSize, string comment)
+{
+   // Execute a buy order with specified lot size and comment
+   // ...
+   return true; // Placeholder value
+}
+
+//+------------------------------------------------------------------+
+//| Function to execute a sell order                                  |
+//+------------------------------------------------------------------+
+bool Sell(double lotSize, string comment)
+{
+   // Execute a sell order with specified lot size and comment
+   // ...
+   return true; // Placeholder value
+}
